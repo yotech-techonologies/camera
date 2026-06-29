@@ -3,209 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shopping Cart - SecureCam CCTV Store</title>
-
+<title>Your Cart - SecureCam CCTV Store</title>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
 body{
+    font-family:Arial,sans-serif;
     background:#f5f5f5;
-}
-
-header{
-    background:#111;
-    color:#fff;
-    text-align:center;
     padding:20px;
 }
-
-.container{
-    width:90%;
-    max-width:900px;
-    margin:30px auto;
+h1{
+    text-align:center;
+    margin-bottom:20px;
 }
-
-.cart-box{
+table{
+    width:100%;
+    border-collapse:collapse;
     background:#fff;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 3px 10px rgba(0,0,0,.2);
 }
-
-.cart-item{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 0;
-    border-bottom:1px solid #ddd;
+th, td{
+    padding:12px;
+    border:1px solid #ddd;
+    text-align:center;
 }
-
-.cart-item:last-child{
-    border-bottom:none;
+th{
+    background:#007bff;
+    color:white;
 }
-
-.item-name{
-    font-size:18px;
-    font-weight:bold;
-}
-
-.item-price{
-    color:#007bff;
-    font-weight:bold;
-}
-
-.remove-btn{
+button{
+    padding:8px 12px;
     background:#dc3545;
-    color:#fff;
+    color:white;
     border:none;
-    padding:8px 14px;
     border-radius:5px;
     cursor:pointer;
 }
-
-.remove-btn:hover{
-    background:#b02a37;
+button:hover{
+    background:#a71d2a;
 }
-
-.total{
-    text-align:right;
+.checkout{
     margin-top:20px;
-    font-size:24px;
-    font-weight:bold;
+    text-align:right;
 }
-
-.buttons{
-    display:flex;
-    justify-content:space-between;
-    margin-top:30px;
-    flex-wrap:wrap;
-    gap:15px;
+.checkout button{
+    background:#28a745;
 }
-
-.buttons a{
-    text-decoration:none;
-    color:#fff;
-    background:#007bff;
-    padding:14px 22px;
-    border-radius:5px;
-    font-weight:bold;
-}
-
-.buttons a:hover{
-    background:#0056b3;
-}
-
-.empty{
-    text-align:center;
-    font-size:20px;
-    color:#777;
-    padding:40px 0;
-}
-
-footer{
-    background:#111;
-    color:#fff;
-    text-align:center;
-    padding:20px;
-    margin-top:40px;
+.checkout button:hover{
+    background:#1e7e34;
 }
 </style>
-
 </head>
 <body>
 
-<header>
 <h1>Your Shopping Cart</h1>
-<p>Review your selected products.</p>
-</header>
 
-<div class="container">
+<table id="cartTable">
+<thead>
+<tr>
+<th>Product</th>
+<th>Price</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<!-- Items will be injected here -->
+</tbody>
+</table>
 
-<div class="cart-box">
-
-<div id="cartItems"></div>
-
-<div class="total">
-Total: ₦<span id="total">0</span>
+<div class="checkout">
+<button onclick="checkout()">Proceed to Checkout</button>
 </div>
-
-<div class="buttons">
-<a href="index.html">← Continue Shopping</a>
-<a href="checkout.html">Proceed to Checkout →</a>
-</div>
-
-</div>
-
-</div>
-
-<footer>
-<p>© 2026 SecureCam CCTV Store</p>
-</footer>
 
 <script>
+function loadCart(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let tbody = document.querySelector("#cartTable tbody");
+    tbody.innerHTML = "";
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.forEach((item, index) => {
+        let row = document.createElement("tr");
 
-const cartItems = document.getElementById("cartItems");
-const totalElement = document.getElementById("total");
-
-function displayCart(){
-
-cartItems.innerHTML="";
-
-let total = 0;
-
-if(cart.length===0){
-
-cartItems.innerHTML='<div class="empty">Your cart is empty.</div>';
-
-totalElement.innerHTML="0";
-
-return;
-
-}
-
-cart.forEach((item,index)=>{
-
-total += item.price;
-
-cartItems.innerHTML += `
-<div class="cart-item">
-<div>
-<div class="item-name">${item.name}</div>
-<div class="item-price">₦${item.price.toLocaleString()}</div>
-</div>
-
-<button class="remove-btn" onclick="removeItem(${index})">
-Remove
-</button>
-
-</div>
-`;
-
-});
-
-totalElement.innerHTML = total.toLocaleString();
-
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>₦${item.price.toLocaleString()}</td>
+            <td><button onclick="removeItem(${index})">Remove</button></td>
+        `;
+        tbody.appendChild(row);
+    });
 }
 
 function removeItem(index){
-
-cart.splice(index,1);
-
-localStorage.setItem("cart",JSON.stringify(cart));
-
-displayCart();
-
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index,1);
+    localStorage.setItem("cart",JSON.stringify(cart));
+    loadCart();
 }
 
-displayCart();
+function checkout(){
+    alert("Proceeding to checkout...");
+    // You can redirect to checkout.html or handle payment here
+    window.location.href = "checkout.html";
+}
 
+window.onload = loadCart;
 </script>
 
 </body>
