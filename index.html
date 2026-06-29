@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SecureCam CCTV Store</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+}
+
+header{
+    background:#111;
+    color:#fff;
+    padding:20px;
+}
+
+header h1{
+    text-align:center;
+}
+
+header p{
+    text-align:center;
+    margin-top:5px;
+}
+
+nav{
+    margin-top:15px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:0 15px;
+    font-weight:bold;
+    background:#007bff;
+    padding:10px 18px;
+    border-radius:5px;
+}
+
+nav a:hover{
+    background:#0056b3;
+}
+
+/* Welcome Section */
+
+.intro{
+    background:#fff;
+    padding:60px 30px;
+    text-align:center;
+}
+
+.intro h2{
+    font-size:40px;
+    color:#111;
+    margin-bottom:20px;
+}
+
+.intro p{
+    max-width:900px;
+    margin:20px auto;
+    color:#555;
+    font-size:18px;
+    line-height:1.8;
+}
+
+/* Products */
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:30px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+    text-align:center;
+}
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.card h3{
+    margin:15px 0 5px;
+}
+
+.price{
+    color:#007bff;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+button{
+    width:90%;
+    padding:12px;
+    margin-bottom:15px;
+    border:none;
+    background:#007bff;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>SecureCam CCTV Store</h1>
+
+<p>Quality Security Cameras at Affordable Prices</p>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="cart.html">Cart</a>
+</nav>
+
+</header>
+
+<section class="intro">
+
+<h2>Protect What Matters Most</h2>
+
+<p>
+Welcome to <strong>SecureCam CCTV Store</strong>, your trusted destination for premium CCTV cameras and modern surveillance solutions. We provide reliable security products designed to keep your home, office, shop, warehouse, school, and business protected around the clock.
+</p>
+
+<p>
+Our collection features high-definition CCTV cameras with crystal-clear video quality, infrared night vision, motion detection, weather-resistant designs, and remote viewing from your smartphone or computer. Every product is carefully selected to deliver excellent performance, durability, and value.
+</p>
+
+<p>
+At SecureCam, we believe security is an investment, not an expense. Whether you need a single security camera or a complete surveillance system, we have the right solution for your needs. Browse our products below and enjoy professional-quality security at affordable prices.
+</p>
+
+</section>
+
+<div class="products">
+
+<div class="card">
+<img src="camera1.jpg" alt="HD Bullet Camera">
+<h3>HD Bullet Camera</h3>
+<div class="price">₦25,000</div>
+<button onclick="addCart('HD Bullet Camera',25000)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="camera2.jpg" alt="WiFi CCTV Camera">
+<h3>WiFi CCTV Camera</h3>
+<div class="price">₦35,000</div>
+<button onclick="addCart('WiFi CCTV Camera',35000)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="camera3.jpg" alt="PTZ Smart Camera">
+<h3>PTZ Smart Camera</h3>
+<div class="price">₦48,000</div>
+<button onclick="addCart('PTZ Smart Camera',48000)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="camera4.jpg" alt="DVR Recorder">
+<h3>DVR Recorder</h3>
+<div class="price">₦40,000</div>
+<button onclick="addCart('DVR Recorder',40000)">Add to Cart</button>
+</div>
+
+</div>
+
+<footer>
+
+<p><strong>Why Choose SecureCam?</strong></p>
+
+<p>
+✔ Premium CCTV Cameras &nbsp; | &nbsp;
+✔ Affordable Prices &nbsp; | &nbsp;
+✔ Reliable Security Solutions &nbsp; | &nbsp;
+✔ Fast Delivery &nbsp; | &nbsp;
+✔ Excellent Customer Support
+</p>
+
+<br>
+
+<p>© 2026 SecureCam CCTV Store. All Rights Reserved.</p>
+
+</footer>
+
+<script>
+
+function addCart(name,price){
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+cart.push({
+    name:name,
+    price:price
+});
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+alert(name + " has been added to your cart.");
+
+}
+
+</script>
+
+</body>
+</html>
