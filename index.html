@@ -226,6 +226,8 @@ function addCart(name,price){
     cart.push({ name:name, price:price });
     localStorage.setItem("cart",JSON.stringify(cart));
     alert(name + " has been added to your cart.");
+    // Optional: redirect to cart page immediately
+    // window.location.href = "cart.html";
 }
 </script>
 
