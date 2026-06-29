@@ -51,26 +51,28 @@ nav a:hover{
     background:#0056b3;
 }
 
-/* Welcome Section */
+/* Sections */
 
-.intro{
-    background:#fff;
+section{
     padding:60px 30px;
-    text-align:center;
-}
-
-.intro h2{
-    font-size:40px;
-    color:#111;
+    background:#fff;
     margin-bottom:20px;
 }
 
-.intro p{
+section h2{
+    font-size:32px;
+    color:#111;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+section p{
     max-width:900px;
     margin:20px auto;
     color:#555;
     font-size:18px;
     line-height:1.8;
+    text-align:center;
 }
 
 /* Products */
@@ -136,38 +138,30 @@ footer{
 <body>
 
 <header>
-
 <h1>SecureCam CCTV Store</h1>
-
 <p>Quality Security Cameras at Affordable Prices</p>
-
 <nav>
 <a href="index.html">Home</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
 <a href="cart.html">Cart</a>
 </nav>
-
 </header>
 
 <section class="intro">
-
 <h2>Protect What Matters Most</h2>
-
 <p>
 Welcome to <strong>SecureCam CCTV Store</strong>, your trusted destination for premium CCTV cameras and modern surveillance solutions. We provide reliable security products designed to keep your home, office, shop, warehouse, school, and business protected around the clock.
 </p>
-
 <p>
 Our collection features high-definition CCTV cameras with crystal-clear video quality, infrared night vision, motion detection, weather-resistant designs, and remote viewing from your smartphone or computer. Every product is carefully selected to deliver excellent performance, durability, and value.
 </p>
-
 <p>
 At SecureCam, we believe security is an investment, not an expense. Whether you need a single security camera or a complete surveillance system, we have the right solution for your needs. Browse our products below and enjoy professional-quality security at affordable prices.
 </p>
-
 </section>
 
 <div class="products">
-
 <div class="card">
 <img src="camera1.jpg" alt="HD Bullet Camera">
 <h3>HD Bullet Camera</h3>
@@ -195,13 +189,26 @@ At SecureCam, we believe security is an investment, not an expense. Whether you 
 <div class="price">₦40,000</div>
 <button onclick="addCart('DVR Recorder',40000)">Add to Cart</button>
 </div>
-
 </div>
 
+<section id="about">
+<h2>About Us</h2>
+<p>
+SecureCam CCTV Store is dedicated to providing top-quality surveillance solutions for homes and businesses. With years of experience in the security industry, we pride ourselves on offering products that combine innovation, reliability, and affordability. Our mission is to help you safeguard what matters most with cutting-edge technology and exceptional customer service.
+</p>
+</section>
+
+<section id="contact">
+<h2>Contact Us</h2>
+<p>
+📍 Address: 123 Security Lane, Port Harcourt, Nigeria <br>
+📞 Phone: +234 800 123 4567 <br>
+📧 Email: support@securecam.com
+</p>
+</section>
+
 <footer>
-
 <p><strong>Why Choose SecureCam?</strong></p>
-
 <p>
 ✔ Premium CCTV Cameras &nbsp; | &nbsp;
 ✔ Affordable Prices &nbsp; | &nbsp;
@@ -209,30 +216,17 @@ At SecureCam, we believe security is an investment, not an expense. Whether you 
 ✔ Fast Delivery &nbsp; | &nbsp;
 ✔ Excellent Customer Support
 </p>
-
 <br>
-
 <p>© 2026 SecureCam CCTV Store. All Rights Reserved.</p>
-
 </footer>
 
 <script>
-
 function addCart(name,price){
-
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-cart.push({
-    name:name,
-    price:price
-});
-
-localStorage.setItem("cart",JSON.stringify(cart));
-
-alert(name + " has been added to your cart.");
-
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push({ name:name, price:price });
+    localStorage.setItem("cart",JSON.stringify(cart));
+    alert(name + " has been added to your cart.");
 }
-
 </script>
 
 </body>
