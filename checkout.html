@@ -4,193 +4,141 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout - SecureCam CCTV Store</title>
-
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
 body{
+    font-family:Arial,sans-serif;
     background:#f5f5f5;
-}
-
-header{
-    background:#111;
-    color:#fff;
-    text-align:center;
     padding:20px;
 }
-
-.container{
-    width:90%;
-    max-width:700px;
-    margin:40px auto;
-}
-
-.checkout-box{
-    background:#fff;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 3px 10px rgba(0,0,0,.2);
-}
-
-.checkout-box h2{
+h1{
+    text-align:center;
     margin-bottom:20px;
-    text-align:center;
 }
-
-.total{
-    background:#007bff;
-    color:#fff;
-    padding:15px;
-    text-align:center;
-    border-radius:6px;
-    font-size:24px;
-    margin-bottom:25px;
-}
-
-input,
-textarea{
+table{
     width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    margin-bottom:20px;
+}
+th, td{
     padding:12px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+th{
+    background:#007bff;
+    color:white;
+}
+.total{
+    text-align:right;
+    font-size:20px;
+    font-weight:bold;
+    margin:20px 0;
+}
+form{
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+    max-width:600px;
+    margin:0 auto;
+}
+form label{
+    display:block;
+    margin:10px 0 5px;
+    font-weight:bold;
+}
+form input, form textarea{
+    width:100%;
+    padding:10px;
     margin-bottom:15px;
     border:1px solid #ccc;
     border-radius:5px;
-    font-size:16px;
 }
-
-textarea{
-    resize:vertical;
-    height:100px;
-}
-
 button{
-    width:100%;
-    padding:15px;
+    padding:12px 20px;
     background:#28a745;
-    color:#fff;
+    color:white;
     border:none;
     border-radius:5px;
-    font-size:18px;
     cursor:pointer;
+    font-size:16px;
 }
-
 button:hover{
-    background:#218838;
-}
-
-.links{
-    display:flex;
-    justify-content:space-between;
-    margin-top:20px;
-}
-
-.links a{
-    text-decoration:none;
-    color:#007bff;
-    font-weight:bold;
-}
-
-footer{
-    background:#111;
-    color:#fff;
-    text-align:center;
-    padding:20px;
-    margin-top:40px;
+    background:#1e7e34;
 }
 </style>
-
 </head>
 <body>
 
-<header>
+<h1>Checkout</h1>
 
-<h1>SecureCam CCTV Store</h1>
+<table id="checkoutTable">
+<thead>
+<tr>
+<th>Product</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody>
+<!-- Items will be injected here -->
+</tbody>
+</table>
 
-<p>Secure Checkout</p>
-
-</header>
-
-<div class="container">
-
-<div class="checkout-box">
-
-<h2>Complete Your Order</h2>
-
-<div class="total">
-Total: ₦<span id="total">0</span>
-</div>
+<div class="total" id="totalAmount">Total: ₦0</div>
 
 <form onsubmit="placeOrder(event)">
+    <h2>Customer Information</h2>
+    <label for="name">Full Name</label>
+    <input type="text" id="name" required>
 
-<input type="text" placeholder="Full Name" required>
+    <label for="email">Email Address</label>
+    <input type="email" id="email" required>
 
-<input type="tel" placeholder="Phone Number" required>
+    <label for="phone">Phone Number</label>
+    <input type="text" id="phone" required>
 
-<input type="email" placeholder="Email Address" required>
+    <label for="address">Delivery Address</label>
+    <textarea id="address" rows="4" required></textarea>
 
-<textarea placeholder="Delivery Address" required></textarea>
-
-<button type="submit">
-Place Order
-</button>
-
+    <button type="submit">Place Order</button>
 </form>
 
-<div class="links">
-<a href="cart.html">← Back to Cart</a>
-<a href="index.html">Continue Shopping</a>
-</div>
-
-</div>
-
-</div>
-
-<footer>
-
-<p>© 2026 SecureCam CCTV Store. All Rights Reserved.</p>
-
-</footer>
-
 <script>
+function loadCheckout(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let tbody = document.querySelector("#checkoutTable tbody");
+    let total = 0;
+    tbody.innerHTML = "";
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.forEach(item => {
+        let row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${item.name}</td>
+            <td>₦${item.price.toLocaleString()}</td>
+        `;
+        tbody.appendChild(row);
+        total += item.price;
+    });
 
-let total = 0;
-
-cart.forEach(item=>{
-    total += item.price;
-});
-
-document.getElementById("total").innerHTML = total.toLocaleString();
+    document.getElementById("totalAmount").textContent = "Total: ₦" + total.toLocaleString();
+}
 
 function placeOrder(event){
+    event.preventDefault();
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let address = document.getElementById("address").value;
 
-event.preventDefault();
+    alert("Thank you, " + name + "! Your order has been placed.\n\nWe will deliver to:\n" + address);
 
-if(cart.length===0){
-
-alert("Your cart is empty.");
-
-return;
-
+    // Clear cart after checkout
+    localStorage.removeItem("cart");
+    window.location.href = "index.html";
 }
 
-alert(
-"Thank you for your order!\n\n" +
-"Your order has been received successfully.\n" +
-"Total Amount: ₦" + total.toLocaleString()
-);
-
-localStorage.removeItem("cart");
-
-window.location.href="index.html";
-
-}
-
+window.onload = loadCheckout;
 </script>
 
 </body>
