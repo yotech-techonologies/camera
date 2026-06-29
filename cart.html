@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart - SecureCam CCTV Store</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+}
+
+header{
+    background:#111;
+    color:#fff;
+    text-align:center;
+    padding:20px;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    margin:30px auto;
+}
+
+.cart-box{
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,.2);
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 0;
+    border-bottom:1px solid #ddd;
+}
+
+.cart-item:last-child{
+    border-bottom:none;
+}
+
+.item-name{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.item-price{
+    color:#007bff;
+    font-weight:bold;
+}
+
+.remove-btn{
+    background:#dc3545;
+    color:#fff;
+    border:none;
+    padding:8px 14px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.remove-btn:hover{
+    background:#b02a37;
+}
+
+.total{
+    text-align:right;
+    margin-top:20px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.buttons a{
+    text-decoration:none;
+    color:#fff;
+    background:#007bff;
+    padding:14px 22px;
+    border-radius:5px;
+    font-weight:bold;
+}
+
+.buttons a:hover{
+    background:#0056b3;
+}
+
+.empty{
+    text-align:center;
+    font-size:20px;
+    color:#777;
+    padding:40px 0;
+}
+
+footer{
+    background:#111;
+    color:#fff;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+<h1>Your Shopping Cart</h1>
+<p>Review your selected products.</p>
+</header>
+
+<div class="container">
+
+<div class="cart-box">
+
+<div id="cartItems"></div>
+
+<div class="total">
+Total: ₦<span id="total">0</span>
+</div>
+
+<div class="buttons">
+<a href="index.html">← Continue Shopping</a>
+<a href="checkout.html">Proceed to Checkout →</a>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+<p>© 2026 SecureCam CCTV Store</p>
+</footer>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+const cartItems = document.getElementById("cartItems");
+const totalElement = document.getElementById("total");
+
+function displayCart(){
+
+cartItems.innerHTML="";
+
+let total = 0;
+
+if(cart.length===0){
+
+cartItems.innerHTML='<div class="empty">Your cart is empty.</div>';
+
+totalElement.innerHTML="0";
+
+return;
+
+}
+
+cart.forEach((item,index)=>{
+
+total += item.price;
+
+cartItems.innerHTML += `
+<div class="cart-item">
+<div>
+<div class="item-name">${item.name}</div>
+<div class="item-price">₦${item.price.toLocaleString()}</div>
+</div>
+
+<button class="remove-btn" onclick="removeItem(${index})">
+Remove
+</button>
+
+</div>
+`;
+
+});
+
+totalElement.innerHTML = total.toLocaleString();
+
+}
+
+function removeItem(index){
+
+cart.splice(index,1);
+
+localStorage.setItem("cart",JSON.stringify(cart));
+
+displayCart();
+
+}
+
+displayCart();
+
+</script>
+
+</body>
+</html>
